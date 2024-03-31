@@ -13,7 +13,7 @@ export const addOrder = async (req, res, next) => {
 
     await newOrder.save();
 
-    res.status(200).json('Order added successfully');
+    res.status(201).json('Order added successfully');
   } catch (error) {
     next(error);
   }
@@ -22,6 +22,9 @@ export const addOrder = async (req, res, next) => {
 export const getOrder = async (req, res, next) => {
   try {
     const orders = await Order.find({ userId: req.params.id });
+    if (orders.length === 0) {
+      return next(createError(404, 'No orders found!'));
+    }
 
     res.status(200).json(orders);
   } catch (error) {
