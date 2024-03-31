@@ -1,20 +1,28 @@
 import mongoose from 'mongoose';
 
-const OrderSchema = new mongoose.Schema(
+const ProductSchema = new mongoose.Schema(
   {
+    name: {
+      type: String,
+      required: true,
+    },
     userId: {
       type: String,
       required: true,
     },
-    title: {
+    price: {
       type: String,
       required: true,
     },
-    subTotal: {
+    description: {
+      type: String,
+      required: true,
+    },
+    price: {
       type: Number,
       required: true,
     },
-    phoneNumber: {
+    stock: {
       type: Number,
       required: true,
     },
@@ -22,4 +30,4 @@ const OrderSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export default mongoose.model('Order', OrderSchema);
+export default mongoose.model('Product', ProductSchema);
