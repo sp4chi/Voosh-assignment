@@ -11,17 +11,31 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import axios from 'axios';
+import { useState } from 'react';
 
 const defaultTheme = createTheme();
 
 export default function Login() {
-  const handleSubmit = (event) => {
+  const [token, setToken] = useState('');
+
+  const handleLogin = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
+    const formData = {
       phoneNumber: data.get('phoneNumber'),
       password: data.get('password'),
-    });
+    };
+    console.log({ ...formData });
+    try {
+      const response = await axios.post('/auth/login-user', {
+        ...formData,
+      });
+      setToken(response.data.token);
+      // setLoggedIn(true);
+    } catch (error) {
+      console.error(error.response.data.error);
+    }
   };
 
   return (
@@ -43,16 +57,15 @@ export default function Login() {
           </Typography>
           <Box
             component='form'
-            onSubmit={handleSubmit}
+            onSubmit={handleLogin}
             noValidate
             sx={{ mt: 1 }}>
             <TextField
               margin='normal'
               required
               fullWidth
-              id='phoneNumber'
-              label='Phone Number'
               name='phoneNumber'
+              label='Phone Number'
               autoComplete='phoneNumber'
               autoFocus
             />
@@ -63,7 +76,6 @@ export default function Login() {
               name='password'
               label='Password'
               type='password'
-              id='password'
               autoComplete='current-password'
             />
 

@@ -2,13 +2,15 @@ import { useState } from 'react';
 import { TextField, Button, Typography, Container } from '@mui/material';
 
 const AddOrder = () => {
-  const [title, setTitle] = useState('');
-  const [subtotal, setSubtotal] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Handle form submission here
+    const data = new FormData(event.currentTarget);
+    console.log({
+      userId: '11k1q1112121',
+      title: data.get('title'),
+      subTotal: data.get('subTotal'),
+      phoneNumber: data.get('phoneNumber'),
+    });
   };
 
   return (
@@ -31,25 +33,22 @@ const AddOrder = () => {
         }}
         onSubmit={handleSubmit}>
         <TextField
+          name='title'
           label='Title'
           variant='outlined'
           style={{ marginBottom: '1rem', width: '100%' }}
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
         />
         <TextField
+          name='subTotal'
           label='Subtotal'
           variant='outlined'
           style={{ marginBottom: '1rem', width: '100%' }}
-          value={subtotal}
-          onChange={(e) => setSubtotal(e.target.value)}
         />
         <TextField
+          name='phoneNumber'
           label='Phone Number'
           variant='outlined'
           style={{ marginBottom: '1rem', width: '100%' }}
-          value={phoneNumber}
-          onChange={(e) => setPhoneNumber(e.target.value)}
         />
         <Button
           variant='contained'
